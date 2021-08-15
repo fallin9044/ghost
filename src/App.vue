@@ -42,6 +42,11 @@
       isShowRegister() {
         return this.$store.state.isShowRegister
       }
+    },
+    mounted () {
+      this.$api.me().then(res =>{
+          if(res.result == 0) this.$store.commit('setLogin', true);
+        })
     }
   }
 
@@ -63,4 +68,5 @@
     -webkit-user-drag: none;
   }
 
+a {text-decoration:none ;}
 </style>

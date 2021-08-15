@@ -53,10 +53,14 @@
     },
     methods: {
       setTarget() {
-        this.$api.me().then(user => {
+        this.$api.me().then(res => {
+          if (res.result == -1) {
+              this.$router.push('/home')
+              return
+          }
           for (let a in this.answers) {
             let mid = this.answers[a]
-            if (mid.username == user.username) {
+            if (mid.username == res.data.username) {
               this.target.position.x = -mid.x - 50;
               this.target.position.y = -mid.y - 50;
               this.target.zoom = 100

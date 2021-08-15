@@ -6,8 +6,8 @@
         <icon style="position:absolute;margin-left:33%;margin-top:12%" src="n2.svg" hover="n2h.svg" href="/video2"/>
         <icon style="position:absolute;margin-left:60%;margin-top:36%" src="n3.svg" hover="n3h.svg" href="/video3"/>
         <icon style="position:absolute;margin-left:63%;margin-top:12%" src="n4.svg" hover="n4h.svg" href="/video4"/>
-        <icon style="position:absolute;margin-left:44%;margin-top:48%" src="ins.svg" href=""/>
-        <icon style="position:absolute;margin-left:52%;margin-top:48%" src="email.svg" href=""/>
+        <a href="https://www.instagram.com/niuqr_ruby/?hl=en" target="_blank"><img style="position:absolute;margin-left:44%;margin-top:48%;height:40px" src="../assets/icon/ins.svg" ></a>
+        <a href="https://www.instagram.com/niuqr_ruby/?hl=en"><img style="position:absolute;margin-left:52%;margin-top:48%;height:40px" src="../assets/icon/email.svg" /></a>
     </VideoBg>
   </div>
 </template>

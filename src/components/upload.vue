@@ -51,7 +51,7 @@
       <el-col :span="15" style="margin-left:18%">
         <input
           style="width:100%;border:none;border-radius:0;border-bottom:#000 3px solid;box-shadow: 0px 0px 0px 0px;background:none;outline:none;"
-          type="text" maxlength="256" placeholder="your comment" :value="description">
+          type="text" maxlength="256" placeholder="your description." v-model="description">
       </el-col>
     </el-row>
   </div>
@@ -91,9 +91,13 @@
       },
       upload() {
         this.$api.me()
-          .then(user => {
+          .then(res => {
+            if (res.result == -1) {
+                  this.$router.push('/home')
+                  return
+            }
             let param = new FormData();
-            param.append('username', user.username)
+            param.append('username', res.data.username)
             param.append('description', this.description)
             param.append('video', this.video)
             param.append('picture', this.$refs.upImgMain.files[0])

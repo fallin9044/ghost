@@ -58,10 +58,9 @@
         .then(res =>{
           alert("login successfully")
           this.$emit('close');
-          this.$store.commit('setLogin', true);
         })
         .catch(res=>{
-          alert("login failed, please check your input.")
+          alert("login failed")
         })
       }
     }

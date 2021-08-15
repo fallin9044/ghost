@@ -1,28 +1,29 @@
 <template>
 
   <div style="width:100%;height:100%">
-    <el-row class="borderDiv" style="padding:15px;height:8%">
+    <el-row class="borderDiv" style="padding:19px;height:9%">
       <el-col :span="1">
         <icon src="back.svg" hover="backh.svg" href="/home" />
       </el-col>
-      <el-col :span="1" :offset="22">
-        <icon src="head.svg" href="/home" />
+      <el-col :span="2" :offset="21">
+        <log></log>
+
       </el-col>
     </el-row>
 
-    <el-row class="borderDiv" style="width:100%;height:92%">
+    <el-row class="borderDiv" style="width:100%;height:91%">
       <el-col :span="22" class="el-wrapper" style="height:100%;overflow:auto;">
         <img src="/static/img/n2-word.svg" style="margin-top:-10%" />
         <el-col :span="10" :offset="7">
           <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true"
             :options="playerOptions" />
-          <el-col :span="8" :offset="8" style="padding-top:20px">
+          <el-col :span="8" :offset="8" style="padding-top:20px;padding-bottom:20px">
             <a href="javascript:void(0)"><img @click="showUpload" src="/static/img/uploadAnswer.svg" /></a>
           </el-col>
         </el-col>
       </el-col>
-      <el-col :span="2">
-        <el-row class="tab">
+      <el-col :span="2" style="height:100%">
+                <el-row class="tab">
           <el-col :span="16" :offset="4">
             <router-link to="/video"><img src="../assets/icon/n0.svg" /></router-link>
           </el-col>
@@ -47,9 +48,9 @@
             <router-link to="/video4"><img src="../assets/icon/n4.svg" /></router-link>
           </el-col>
         </el-row>
-        <el-row class="tab">
-          <el-col :span="22" :offset="2">
-            <router-link to="/answer2"><img src="/static/img/checkAnswer.PNG" width="80%" /></router-link>
+        <el-row class="tab" style="height:62%">
+          <el-col :span="22" :offset="2" style="height:100%">
+            <router-link to="/answer2"><VideoBg :sources="['/static/video/check_answer.mp4']" ></VideoBg></router-link>
           </el-col>
         </el-row>
       </el-col>
@@ -64,15 +65,20 @@
 <script>
   import icon from '@/components/icon'
   import upload from '@/components/upload'
+  import VideoBg from '@/components/VideoBg'
   import {
     videoPlayer
   } from 'vue-video-player'
   import 'video.js/dist/video-js.css'
+  import log from '@/components/log'
 
   export default {
     components: {
       icon,
-      videoPlayer
+      videoPlayer,
+      upload,
+      log,
+      VideoBg
     },
     name: 'HelloWorld',
 
@@ -106,8 +112,8 @@
     },
     methods: {
       showUpload() {
-        this.$api.me().then(user =>{
-          if(user == '') this.$store.commit('show');
+        this.$api.me().then(res =>{
+          if(res.result == -1) this.$store.commit('show');
           else this.isShowUpload = true;
         })
       },
@@ -142,6 +148,7 @@
     border-style: solid;
     border-radius: 10px;
     box-sizing: border-box;
+        height: 8%;
   }
 
   .el-wrapper::-webkit-scrollbar {

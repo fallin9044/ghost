@@ -5,7 +5,8 @@ Vue.use(vuex)
 export default new vuex.Store({
     state: {
       isShowLogin: false,
-      isShowRegister: false
+      isShowRegister: false,
+      isLogin:false
     },
     mutations: {
       show (state) {
@@ -20,5 +21,8 @@ export default new vuex.Store({
       hideR (state) {
         state.isShowRegister = false;
       },
+      setLogin(state, login) {
+        state.isLogin = login
+      }
     }
   })

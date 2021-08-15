@@ -1,17 +1,17 @@
 <template>
 
   <div style="width:100%;height:100%">
-    <el-row class="borderDiv" style="padding:15px;height:9%">
+    <el-row class="borderDiv" style="padding:19px;height:9%">
       <el-col :span="1">
         <icon src="back.svg" hover="backh.svg" href="/home" />
       </el-col>
-      <el-col :span="1" :offset="22">
-        <icon src="head.svg" href="/home" />
+      <el-col :span="2" :offset="21">
+        <log></log>
       </el-col>
     </el-row>
 
     <el-row class="borderDiv" style="width:100%;min-height:91%">
-      <el-col :span="9" :offset="6" class="el-wrapper" style="height:100%;overflow:auto;">>
+      <el-col :span="9" :offset="6" class="el-wrapper" style="height:100%;overflow:auto;">
         <video-player style="margin-top:15%" class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true"
           :options="playerOptions" />
         <el-col :span="18" :offset="3">
@@ -76,11 +76,13 @@
     videoPlayer
   } from 'vue-video-player'
   import 'video.js/dist/video-js.css'
+  import log from '@/components/log'
 
   export default {
     components: {
       icon,
-      videoPlayer
+      videoPlayer,
+      log
     },
     name: 'HelloWorld',
 
@@ -165,4 +167,26 @@
     border-radius: 5px;
     background: #ffffff;
   }
+
+  .top {
+    font-size: x-large;
+    font-weight: 570;
+    color: #ffffff;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+    margin-top: 7%;
+    margin-left: 27%;
+  }
+
+  .top:hover {
+    color: #afaaaa;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
 </style>

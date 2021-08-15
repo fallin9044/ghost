@@ -1,29 +1,27 @@
 <template>
 
   <div style="width:100%;height:100%;z-index:3;">
-    <el-row class="borderDiv" style="padding:15px;height:8%">
+    <el-row class="borderDiv" style="padding:19px;height:9%">
       <el-col :span="1">
-        <icon src="back.svg" hover="backh.svg" href="/home" />
+        <icon src="back.svg" hover="backh.svg" href="/video1" />
       </el-col>
-      <el-col :span="1" :offset="22">
-        <icon src="head.svg" href="/home" />
+      <el-col :span="2" :offset="21">
+        <log></log>
       </el-col>
     </el-row>
 
-    <el-row class="borderDiv" style="width:100%;height:92%">
+    <el-row class="borderDiv" style="width:100%;height:91%">
 
 
       <el-col :span="6" style="height:100%">
         <el-row class="tab_left" style="height:35%">
-          <el-col :span="22" :offset="1">
-            <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true"
-              :options="playerOptions" />
+          <el-col :span="22" :offset="1" style="height:100%">
+            <VideoBg :sources="['/static/video/n1.mp4']" ></VideoBg>
           </el-col>
         </el-row>
         <el-row class="tab_left" style="height:31%">
-          <el-col :span="22" :offset="1">
-            <video-player class="video-player vjs-custom-skin" ref="videoPlayer2" :playsinline="true"
-              :options="tpOptions" />
+          <el-col :span="22" :offset="1" style="height:100%">
+            <VideoBg :sources="['/static/video/tianping.mp4']" ></VideoBg>
           </el-col>
         </el-row>
         <el-row class="tab_left" style="height:35%">
@@ -56,17 +54,17 @@
         </el-row>
         <el-row class="tab" style="height:8%">
           <el-col :span="16" :offset="4">
-            <router-link to="/video2"><img src="../assets/icon/n2.svg" /></router-link>
+            <router-link to="/answer2"><img src="../assets/icon/n2.svg" /></router-link>
           </el-col>
         </el-row>
         <el-row class="tab" style="height:8%">
           <el-col :span="16" :offset="4">
-            <router-link to="/video3"><img src="../assets/icon/n3.svg" /></router-link>
+            <router-link to="/answer3"><img src="../assets/icon/n3.svg" /></router-link>
           </el-col>
         </el-row>
         <el-row class="tab" style="height:8%">
           <el-col :span="16" :offset="4">
-            <router-link to="/video4"><img src="../assets/icon/n4.svg" /></router-link>
+            <router-link to="/answer4"><img src="../assets/icon/n4.svg" /></router-link>
           </el-col>
         </el-row>
         <el-row class="tab" style="height:62%">
@@ -80,7 +78,7 @@
       </el-col>
 
     </el-row>
-    <el-col :span="10" :offset="7" v-show="isShowComment" v-if="answer != null" style="position:absolute;left:0px;top:30%;z-index:2">
+    <el-col :span="12" :offset="6" v-show="isShowComment" v-if="answer != null" style="position:absolute;left:0px;top:25%;height:49.2%;z-index:2">
       <comment @close="hidenComment" :answer="answer"></comment>
     </el-col> 
   </div>
@@ -92,66 +90,21 @@
   import login from '@/components/login'
   import paint from '@/components/paint'
   import comment from '@/components/comment'
-  import {
-    videoPlayer
-  } from 'vue-video-player'
-  import 'video.js/dist/video-js.css'
+  import VideoBg from '@/components/VideoBg2'
+import log from '@/components/log.vue'
 
   export default {
     components: {
       icon,ticon,
-      videoPlayer,
       login,
       paint,
-      comment
-    },
+      comment,
+    VideoBg,
+        log},
     name: 'HelloWorld',
 
     data() {
       return {
-        playerOptions: {
-          playbackRates: [0.5, 1.0, 1.5, 2.0], // 可选的播放速度
-          autoplay: true, // 如果为true,浏览器准备好时开始回放。
-          muted: true, // 默认情况下将会消除任何音频。
-          loop: false, // 是否视频一结束就重新开始。
-          preload: 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-          language: 'zh-CN',
-          aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-          fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-          sources: [{
-            type: "video/mp4", // 类型
-            src: '/static/video/n1.mp4' // url地址
-          }],
-          poster: '/static/video/n1-bg.PNG', // 封面地址
-          notSupportedMessage: '此视频暂无法播放，请稍后再试', // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
-          controlBar: {
-            timeDivider: true, // 当前时间和持续时间的分隔符
-            durationDisplay: true, // 显示持续时间
-            remainingTimeDisplay: false, // 是否显示剩余时间功能
-            fullscreenToggle: true // 是否显示全屏按钮
-          }
-        },
-        tpOptions: {
-          autoplay: true, // 如果为true,浏览器准备好时开始回放。
-          muted: true, // 默认情况下将会消除任何音频。
-          loop: true, // 是否视频一结束就重新开始。
-          preload: 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-          language: 'zh-CN',
-          aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-          fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-          sources: [{
-            type: "video/mp4", // 类型
-            src: '/static/video/tianping.mp4' // url地址
-          }],
-          //poster: '/static/video/n1-bg.PNG', // 封面地址
-          notSupportedMessage: '此视频暂无法播放，请稍后再试', // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
-          controlBar: {
-            timeDivider: false, // 当前时间和持续时间的分隔符
-            durationDisplay: false, // 显示持续时间
-            remainingTimeDisplay: false, // 是否显示剩余时间功能
-            fullscreenToggle: false // 是否显示全屏按钮
-          }
-        },
         answers : [],
         answer: null,
         isShowComment:false
@@ -172,6 +125,10 @@
     },
     mounted () {
       this.$api.get("getAnswer?video=v1").then(res=>{
+        if (res.result == -1) {
+            this.$router.push('/video1')
+            return
+        }
         for(let a of res.data) {
           a.picture = this.$api.globalPath + "/v1/" + a.username + "/picture.jpg"
           a.reasonPic = []

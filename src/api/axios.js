@@ -7,7 +7,6 @@ var service = axios.create({
 service.defaults.withCredentials=true
 export default {
     //get请求，其他类型请求复制粘贴，修改method
-    user : null,
     globalPath : 'http://localhost/pics',
     get(url) {
         return new Promise((cback, reject) => {
@@ -15,7 +14,7 @@ export default {
                 method: 'GET',
                 url
             }).then(res => { 
-                cback(res);   //cback在promise执行器内部
+                cback(res.data);   //cback在promise执行器内部
             }).catch(err => {
                 reject(err); 
             })
@@ -29,7 +28,7 @@ export default {
                 url,
                 params:params
             }).then(res => { 
-                cback(res);   //cback在promise执行器内部
+                cback(res.data);   //cback在promise执行器内部
             }).catch(err => {
                 reject(err); 
             })
@@ -43,7 +42,7 @@ export default {
                 url,
                 data:data
             }).then(res => { 
-                cback(res);   //cback在promise执行器内部
+                cback(res.data);   //cback在promise执行器内部
             }).catch(err => {
                 reject(err); 
             })
@@ -52,11 +51,9 @@ export default {
     },
     me(){
         return new Promise((cback, reject) => {
-            if (this.user !== null ) cback(this.user);
             this.get("/me")
             .then(res => {
-                this.user = res.data;
-                cback(this.user);
+                cback(res);
             })
         });
     }

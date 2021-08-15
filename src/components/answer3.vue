@@ -1,29 +1,27 @@
 <template>
 
   <div style="width:100%;height:100%;z-index:3;">
-    <el-row class="borderDiv" style="padding:15px;height:8%">
+    <el-row class="borderDiv" style="padding:19px;height:9%">
       <el-col :span="1">
-        <icon src="back.svg" hover="backh.svg" href="/home" />
+        <icon src="back.svg" hover="backh.svg" href="/video3" />
       </el-col>
-      <el-col :span="1" :offset="22">
-        <icon src="head.svg" href="/home" />
+      <el-col :span="2" :offset="21">
+        <log></log>
       </el-col>
     </el-row>
 
-    <el-row class="borderDiv" style="width:100%;height:92%">
+    <el-row class="borderDiv" style="width:100%;height:91%">
 
 
       <el-col :span="6" style="height:100%">
         <el-row class="tab_left" style="height:35%">
-          <el-col :span="22" :offset="1">
-            <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true"
-              :options="playerOptions" />
+          <el-col :span="22" :offset="1" style="height:100%">
+            <VideoBg :sources="['/static/video/n3.mp4']" ></VideoBg>
           </el-col>
         </el-row>
         <el-row class="tab_left" style="height:31%">
-          <el-col :span="22" :offset="1">
-            <video-player class="video-player vjs-custom-skin" ref="videoPlayer2" :playsinline="true"
-              :options="tpOptions" />
+          <el-col :span="22" :offset="1" style="height:100%">
+            <VideoBg :sources="['/static/video/tianping.mp4']" ></VideoBg>
           </el-col>
         </el-row>
         <el-row class="tab_left" style="height:35%">
@@ -46,17 +44,17 @@
       <el-col :span="2" style="height:100%">
         <el-row class="tab" style="height:8%">
           <el-col :span="16" :offset="4">
-           <router-link to="/video2"><img src="../assets/icon/n0.svg" /></router-link>
+           <router-link to="/video"><img src="../assets/icon/n0.svg" /></router-link>
           </el-col>
         </el-row>
         <el-row class="tab" style="height:8%">
           <el-col :span="16" :offset="4">
-           <router-link to="/video1"><img src="../assets/icon/n1.svg" /></router-link>
+           <router-link to="/answer1"><img src="../assets/icon/n1.svg" /></router-link>
           </el-col>
         </el-row>
         <el-row class="tab" style="height:8%">
           <el-col :span="16" :offset="4">
-            <router-link to="/video2"><img src="../assets/icon/n2.svg" /></router-link>
+            <router-link to="/answer2"><img src="../assets/icon/n2.svg" /></router-link>
           </el-col>
         </el-row>
         <el-row class="tab" style="height:8%">
@@ -66,7 +64,7 @@
         </el-row>
         <el-row class="tab" style="height:8%">
           <el-col :span="16" :offset="4">
-            <router-link to="/video4"><img src="../assets/icon/n4.svg" /></router-link>
+            <router-link to="/answer4"><img src="../assets/icon/n4.svg" /></router-link>
           </el-col>
         </el-row>
         <el-row class="tab" style="height:62%">
@@ -80,7 +78,9 @@
       </el-col>
 
     </el-row>
-
+    <el-col :span="12" :offset="6" v-show="isShowComment" v-if="answer != null" style="position:absolute;left:0px;top:25%;height:49.2%;z-index:2">
+      <comment @close="hidenComment" :answer="answer"></comment>
+    </el-col> 
   </div>
 </template>
 
@@ -89,18 +89,18 @@
     import ticon from '@/components/ticon'
   import login from '@/components/login'
   import paint from '@/components/paint'
-  import {
-    videoPlayer
-  } from 'vue-video-player'
-  import 'video.js/dist/video-js.css'
+  import comment from '@/components/comment'
+  import VideoBg from '@/components/VideoBg2'
+import log from '@/components/log.vue'
 
   export default {
     components: {
       icon,ticon,
-      videoPlayer,
       login,
-      paint
-    },
+      paint,
+      comment,
+    VideoBg,
+        log},
     name: 'HelloWorld',
 
     data() {
@@ -148,17 +148,29 @@
             fullscreenToggle: false // 是否显示全屏按钮
           }
         },
-        answers : []
+        answers : [],
+        isShowComment:false
       }
     },
     methods: {
       findAnswer() {
           this.$refs.paint.setTarget();
+      },
+      hidenComment(){
+          this.isShowComment = false
+      },
+      showComment(index){
+        this.answer = this.answers[index]
+        this.isShowComment = true
       }
 
     },
     mounted () {
       this.$api.get("getAnswer?video=v3").then(res=>{
+        if (res.result == -1) {
+            this.$router.push('/video3')
+            return
+        }
         for(let a of res.data) {
           a.picture = this.$api.globalPath + "/v3/" + a.username + "/picture.jpg"
           a.reasonPic = []
